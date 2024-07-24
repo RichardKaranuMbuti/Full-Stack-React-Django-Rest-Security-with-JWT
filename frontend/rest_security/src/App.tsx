@@ -1,20 +1,20 @@
 // src/App.tsx
 import React from 'react';
-import Signup from './components/Signup';
+// import Signup from './components/Signup';
 import Login from './components/Login';
-import ProtectedResource from './components/ProtectedResource';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Homepage from './pages/Homepage';
 
 const App: React.FC = () => {
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center">
-      <h1 className="text-3xl font-bold mb-6">My App</h1>
-      <div className="space-y-6">
-        <Signup />
-        <Login />
-        <ProtectedResource />
-      </div>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/homepage" element={<Homepage />} />
+      </Routes>
+    </Router>
   );
 };
 
 export default App;
+

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from '../axiosConfig';
 import FlashMessage from './FlashMessage';
 
@@ -6,6 +7,7 @@ const Login: React.FC = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState<{ text: string; type: 'success' | 'error' } | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios.get('/api/get-csrf-token/')
@@ -27,7 +29,12 @@ const Login: React.FC = () => {
         localStorage.setItem('accessToken', access);
         localStorage.setItem('refreshToken', refresh);
         setMessage({ text: 'Login successful!', type: 'success' });
-        // You might want to redirect the user or update the app state here
+        
+        // Clear message and navigate after a short delay
+        setTimeout(() => {
+          setMessage(null);
+          navigate('/homepage');
+        }, 1000);
       }
     } catch (error) {
       console.error('Login error:', error);
